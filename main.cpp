@@ -1,31 +1,33 @@
 #include <iostream>
+#include <vector>
+
 #include <SDL.h>
+#include "functions.cpp"
 
 int main() {
-    int resW = 1280;
-    int resH = 720;
+    int resWidth = 1280;
+    int resHeight = 720;
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
+
     bool running = true;
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cout << "SDL could not be initialized: " << SDL_GetError();
     } else {
-        std::cout << "SDL video system is ready to go\n";
+        std::cout << "SDL initialized.\n";
     }
 
-    // Create an application window with the following settings:
     window = SDL_CreateWindow(
-        "An SDL2 window",        // window title
+        "Ray Casting",           // window title
         SDL_WINDOWPOS_UNDEFINED, // initial x position
         SDL_WINDOWPOS_UNDEFINED, // initial y position
-        resW,                    // width, in pixels
-        resH,                    // height, in pixels
+        resWidth,                // width, in pixels
+        resHeight,               // height, in pixels
         SDL_WINDOW_SHOWN         // flags - see below
     );
 
-    // Check that the window was successfully created
     if (window == NULL) {
         printf("Could not create window: %s\n", SDL_GetError());
         return 1;
@@ -38,7 +40,17 @@ int main() {
         return 1;
     }
 
-    //main game/app loop
+
+
+
+    std::vector< std::vector<int> > layout {
+        { 1, 1, 1, 1, 1 },
+        { 1, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 1 },
+        { 1, 0, 0, 0, 1 },
+        { 1, 1, 1, 1, 1 },
+    };
+
     while (running) {
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
